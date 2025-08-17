@@ -10,6 +10,7 @@ import CategorySection from './components/CategorySection';
 import SearchResults from './components/SearchResults';
 import About from './components/About';
 import Footer from './components/Footer';
+import PWAInstallButton from './components/PWAInstallButton';
 import { SearchResult, SearchFilters } from './types';
 import { mockSearchResults } from './data/mockData';
 
@@ -154,6 +155,9 @@ function App() {
       
       {/* Footer with bottom search bar */}
       <Footer onSearch={handleSearch} />
+      
+      {/* PWA Install Button */}
+      <PWAInstallButton />
     </div>
   );
 }
