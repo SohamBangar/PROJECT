@@ -2,9 +2,38 @@
  * PWA utility functions for service worker registration and app installation
  */
 
+// Check if we're in a supported environment for service workers
+const isServiceWorkerSupported = (): boolean => {
+  // Check if service workers are supported by the browser
+  if (!('serviceWorker' in navigator)) {
+    return false;
+  }
+  
+  // Check if we're in StackBlitz or other environments that don't support service workers
+  if (typeof window !== 'undefined') {
+    // StackBlitz detection
+    if (window.location.hostname.includes('stackblitz') || 
+        window.location.hostname.includes('webcontainer')) {
+      return false;
+    }
+    
+    // Check for other known environments that don't support service workers
+    if (window.location.protocol === 'file:' || 
+        window.location.hostname === 'localhost' && window.location.port === '5173') {
+      // Allow localhost for development, but check for StackBlitz specifically
+      const userAgent = navigator.userAgent.toLowerCase();
+      if (userAgent.includes('webcontainer')) {
+        return false;
+      }
+    }
+  }
+  
+  return true;
+};
+
 // Service Worker registration
 export const registerServiceWorker = async (): Promise<void> => {
-  if ('serviceWorker' in navigator) {
+  if (isServiceWorkerSupported()) {
     try {
       console.log('PWA: Registering service worker...');
       
@@ -32,7 +61,7 @@ export const registerServiceWorker = async (): Promise<void> => {
       console.error('PWA: Service worker registration failed', error);
     }
   } else {
-    console.log('PWA: Service workers not supported');
+    console.log('PWA: Service workers not supported in this environment');
   }
 };
 
