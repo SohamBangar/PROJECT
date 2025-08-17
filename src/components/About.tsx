@@ -27,9 +27,9 @@ const About: React.FC = () => {
 
   const teamMembers = [
     {
-      name: 'Your Name',
-      role: 'Full-Stack Developer',
-      description: 'Computer Science Student passionate about ML and web development'
+      name: 'Soham Bangar',
+      role: 'Btech ',
+      description: 'E&TC Student passionate about ML and web development'
     }
   ];
 
